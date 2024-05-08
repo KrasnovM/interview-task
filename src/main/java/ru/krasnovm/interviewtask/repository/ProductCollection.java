@@ -5,7 +5,6 @@ import ru.krasnovm.interviewtask.entity.Product;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class ProductCollection {
@@ -15,31 +14,32 @@ public class ProductCollection {
         this.repository = new LinkedList<>();
     }
 
-    public void create(Product product) {
+    public Product create(Product product) {
         repository.add(product);
+        return product;
     }
 
     public List<Product> readAll() {
         return new LinkedList<>(repository);
     }
 
-    public Optional<Product> readByName(String name) {
+    public Product readByName(String name) {
         for (Product curr: repository) {
             if (curr.getName().equals(name)) {
-                return Optional.of(curr);
+                return curr;
             }
         }
-        return Optional.empty();
+        return null;
     }
 
-    public int update(Long id, Product product) {
+    public Product update(Product product) {
         for (Product curr : repository) {
-            if (curr.getId().equals(id)) {
+            if (curr.getId().equals(product.getId())) {
                 curr = product;
-                return 0;
+                return product;
             }
         }
-        return -1;
+        return null;
     }
 
     public void delete (Product product) {
