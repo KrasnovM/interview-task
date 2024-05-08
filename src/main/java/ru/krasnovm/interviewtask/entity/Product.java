@@ -18,12 +18,47 @@ public class Product {
         this.inStock = inStock;
     }
 
-    public Product(Long id, String name, String description, Double price) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.inStock = false;
+    public static class ProductBuilder {
+        private Long id;
+        private String name;
+        private String description;
+        private Double price;
+        private Boolean inStock;
+
+        public ProductBuilder() {
+        }
+
+        public void id(Long id) {
+            this.id = id;
+        }
+
+        public void name(String name) {
+            this.name = name;
+        }
+
+        public void description(String description) {
+            this.description = description;
+        }
+
+        public void price(Double price) {
+            this.price = price;
+        }
+
+        public void inStock(Boolean inStock) {
+            this.inStock = inStock;
+        }
+
+        public Product build() {
+            //defaults
+            if (inStock == null) {
+                inStock = false;
+            }
+            if (price == null) {
+                price = 0D;
+            }
+
+            return new Product(id, name, description, price, inStock);
+        }
     }
 
     public Long getId() {
