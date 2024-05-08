@@ -18,6 +18,10 @@ public class Product {
         this.inStock = inStock;
     }
 
+    public static ProductBuilder builder(){
+        return new ProductBuilder();
+    }
+
     public static class ProductBuilder {
         private Long id;
         private String name;
