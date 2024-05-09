@@ -10,7 +10,7 @@ public class Product {
     private final Double price;
     private final Boolean inStock;
 
-    public Product(Long id, String name, String description, Double price, Boolean inStock) {
+    private Product(Long id, String name, String description, Double price, Boolean inStock) {
         this.id = id;
         this.name = name;
         this.description = description;
