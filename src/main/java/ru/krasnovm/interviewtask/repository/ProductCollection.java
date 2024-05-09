@@ -23,13 +23,14 @@ public class ProductCollection {
         return new LinkedList<>(repository);
     }
 
-    public Product readByName(String name) {
+    public List<Product> readByName(String name) {
+        List<Product> result = new LinkedList<>();
         for (Product curr: repository) {
             if (curr.getName().equals(name)) {
-                return curr;
+                result.add(curr);
             }
         }
-        return null;
+        return result;
     }
 
     public Product update(Product product) {

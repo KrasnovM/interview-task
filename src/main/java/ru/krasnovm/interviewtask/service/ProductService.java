@@ -28,7 +28,7 @@ public class ProductService {
         return productRepository.readAll();
     }
 
-    public Product readByName(String name) {
+    public List<Product> readByName(String name) {
         return productRepository.readByName(name);
     }
 
