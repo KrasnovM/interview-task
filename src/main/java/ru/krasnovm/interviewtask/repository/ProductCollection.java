@@ -15,8 +15,15 @@ public class ProductCollection {
     }
 
     public Product create(Product product) {
-        repository.add(product);
-        return product;
+        Product toAdd = Product.builder()
+                        .id(product.getId())
+                        .name(product.getName())
+                        .description(product.getDescription())
+                        .price(product.getPrice())
+                        .inStock(product.getInStock())
+                        .build();
+        repository.add(toAdd);
+        return toAdd;
     }
 
     public List<Product> readAll() {
@@ -36,8 +43,15 @@ public class ProductCollection {
     public Product update(Product product) {
         for (Product curr : repository) {
             if (curr.getId().equals(product.getId())) {
-                curr = product;
-                return product;
+                Product toAdd = Product.builder()
+                        .id(product.getId())
+                        .name(product.getName())
+                        .description(product.getDescription())
+                        .price(product.getPrice())
+                        .inStock(product.getInStock())
+                        .build();
+                curr = toAdd;
+                return toAdd;
             }
         }
         return null;
