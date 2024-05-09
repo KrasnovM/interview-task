@@ -32,24 +32,29 @@ public class Product {
         public ProductBuilder() {
         }
 
-        public void id(Long id) {
+        public ProductBuilder id(Long id) {
             this.id = id;
+            return this;
         }
 
-        public void name(String name) {
+        public ProductBuilder name(String name) {
             this.name = name;
+            return this;
         }
 
-        public void description(String description) {
+        public ProductBuilder description(String description) {
             this.description = description;
+            return this;
         }
 
-        public void price(Double price) {
+        public ProductBuilder price(Double price) {
             this.price = price;
+            return this;
         }
 
-        public void inStock(Boolean inStock) {
+        public ProductBuilder inStock(Boolean inStock) {
             this.inStock = inStock;
+            return this;
         }
 
         public Product build() {
