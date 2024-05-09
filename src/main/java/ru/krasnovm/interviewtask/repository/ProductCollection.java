@@ -43,7 +43,7 @@ public class ProductCollection {
         return null;
     }
 
-    public void delete (Product product) {
-        repository.remove(product);
+    public void delete (Long id) {
+        repository.removeIf(p -> p.getId().equals(id));
     }
 }

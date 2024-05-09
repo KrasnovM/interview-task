@@ -40,8 +40,8 @@ public class ProductService {
         return productRepository.update(product);
     }
 
-    public void delete (Product product) {
-        productRepository.delete(product);
+    public void delete (Long id) {
+        productRepository.delete(id);
     }
 
     private boolean validateProduct(Product product) {
