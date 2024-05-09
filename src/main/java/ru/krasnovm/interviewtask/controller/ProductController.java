@@ -38,7 +38,7 @@ public class ProductController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<List<Product>> readByCategoryId(@PathVariable("name") String name) {
+    public ResponseEntity<List<Product>> readByName(@PathVariable("name") String name) {
         return mappingResponseEntityList(productService.readByName(name));
     }
 
