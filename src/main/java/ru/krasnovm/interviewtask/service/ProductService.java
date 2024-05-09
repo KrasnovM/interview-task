@@ -57,7 +57,7 @@ public class ProductService {
         }
 
         //Цена товара не может быть меньше 0
-        if (product.getPrice() < 0) {
+        if (product.getPrice() != null && product.getPrice() < 0) {
             return false;
         }
 
