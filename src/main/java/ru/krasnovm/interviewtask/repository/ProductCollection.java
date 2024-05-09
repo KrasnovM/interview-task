@@ -3,6 +3,7 @@ package ru.krasnovm.interviewtask.repository;
 import org.springframework.stereotype.Repository;
 import ru.krasnovm.interviewtask.entity.Product;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,8 +42,11 @@ public class ProductCollection {
     }
 
     public Product update(Product product) {
-        for (Product curr : repository) {
+        Iterator<Product> productIterator = repository.iterator();
+        while (productIterator.hasNext()) {
+            Product curr = productIterator.next();
             if (curr.getId().equals(product.getId())) {
+                productIterator.remove();
                 Product toAdd = Product.builder()
                         .id(product.getId())
                         .name(product.getName())
@@ -50,7 +54,7 @@ public class ProductCollection {
                         .price(product.getPrice())
                         .inStock(product.getInStock())
                         .build();
-                curr = toAdd;
+                repository.add(toAdd);
                 return toAdd;
             }
         }
