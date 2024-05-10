@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.krasnovm.interviewtask.dto.ProductDto;
 import ru.krasnovm.interviewtask.entity.Product;
 import ru.krasnovm.interviewtask.service.ProductService;
 
@@ -28,8 +29,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product product) {
-        return mappingResponseEntity(productService.create(product));
+    public ResponseEntity<Product> create(@RequestBody ProductDto productDto) {
+        return mappingResponseEntity(productService.create(productDto));
     }
 
     @GetMapping
