@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.krasnovm.interviewtask.dto.ProductDto;
 import ru.krasnovm.interviewtask.entity.Product;
 import ru.krasnovm.interviewtask.service.ProductService;
 
@@ -48,14 +49,23 @@ public class ProductControllerTest {
 
     @Test
     void shouldCreateProductWithAllFields() throws Exception {
-        Product testProduct = Product.builder()
-                .id(3L).name("Orange")
+        ProductDto testProductDto = ProductDto.builder()
+                .name("Orange")
                 .description("Orange desc")
                 .price(114.5D)
                 .inStock(true)
                 .build();
+
+        Product testProduct = Product.builder()
+                .id(1L)
+                .name("Orange")
+                .description("Orange desc")
+                .price(114.5D)
+                .inStock(true)
+                .build();
+
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = ow.writeValueAsString(testProduct);
+        String json = ow.writeValueAsString(testProductDto);
 
         String expectedResponse = """
                {
@@ -67,7 +77,7 @@ public class ProductControllerTest {
                }
                """;
 
-        when(productService.create(testProduct)).thenReturn(testProduct);
+        when(productService.create(testProductDto)).thenReturn(testProduct);
 
         mockMvc.perform(
                 post("/products")
@@ -79,12 +89,18 @@ public class ProductControllerTest {
 
     @Test
     void shouldCreateObjectWithoutDefiningPriceAndInStock() throws Exception{
+        ProductDto testProductDto = ProductDto.builder()
+                .name("Coffee")
+                .description("Coffee desc")
+                .build();
+
         Product testProduct = Product.builder()
                 .id(4L).name("Coffee")
                 .description("Coffee desc")
                 .build();
+
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = ow.writeValueAsString(testProduct);
+        String json = ow.writeValueAsString(testProductDto);
 
         String expectedResponse = """
                {
@@ -96,7 +112,7 @@ public class ProductControllerTest {
                }
                """;
 
-        when(productService.create(testProduct)).thenReturn(testProduct);
+        when(productService.create(testProductDto)).thenReturn(testProduct);
 
         mockMvc.perform(
                         post("/products")
