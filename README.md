@@ -1,21 +1,21 @@
-_POST /products\
+POST /products\
 Отвечает за создание нового продукта\
 Требует @RequestBody ProductDto, price по умолчанию 0.0, inStock по умолчанию false\
 name - varchar(255), description - varchar(4096), price(numeric(8,2)) check >= 0, inStock - boolean\
 Пример тела запроса:\
 {\
-    "name":"Apple",\
-    "description":"Apple description",\
-    "price":25.5,\
-    "inStock":true\
+"name":"Apple",\
+"description":"Apple description",\
+"price":25.5,\
+"inStock":true\
 }\
 Пример ответа:\
 {\
-    "id":1\
-    "name":"Apple",\
-    "description":"Apple description",\
-    "price":25.5,\
-    "inStock":true\
+"id":1\
+"name":"Apple",\
+"description":"Apple description",\
+"price":25.5,\
+"inStock":true\
 }
 
 
@@ -24,13 +24,13 @@ GET /products\
 Возвращает список всех продуктов\
 Пример ответа:\
 [\
-    {\
-        "id":1\
-        "name":"Apple",\
-        "description":"Apple description",\
-        "price":25.5,\
-        "inStock":true\
-    }\
+{\
+"id":1\
+"name":"Apple",\
+"description":"Apple description",\
+"price":25.5,\
+"inStock":true\
+}\
 ]
 
 
@@ -40,19 +40,19 @@ PUT /products\
 Требует @RequestBody ProductDto, см. GET /products\
 Пример тела запроса:\
 {\
-    "id":1\
-    "name":"Apple",\
-    "description":"Apple description",\
-    "price":25.5,\
-    "inStock":true\
+"id":1\
+"name":"Apple",\
+"description":"Apple description",\
+"price":25.5,\
+"inStock":true\
 }\
 Пример ответа:\
 {\
-    "id":1\
-    "name":"Apple",\
-    "description":"Apple description",\
-    "price":25.5,\
-    "inStock":true\
+"id":1\
+"name":"Apple",\
+"description":"Apple description",\
+"price":25.5,\
+"inStock":true\
 }
 
 
