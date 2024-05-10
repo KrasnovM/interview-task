@@ -10,11 +10,14 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final Long id;
-    private final String name;
-    private final String description;
-    private final Double price;
-    private final Boolean inStock;
+    private Long id;
+    private String name;
+    private String description;
+    private Double price;
+    private Boolean inStock;
+
+    public Product() {
+    }
 
     private Product(Long id, String name, String description, Double price, Boolean inStock) {
         this.id = id;
