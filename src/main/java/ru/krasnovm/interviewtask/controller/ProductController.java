@@ -8,6 +8,7 @@ import ru.krasnovm.interviewtask.dto.ProductDto;
 import ru.krasnovm.interviewtask.entity.Product;
 import ru.krasnovm.interviewtask.service.ProductService;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -20,12 +21,34 @@ public class ProductController {
         this.productService = productService;
     }
 
-    private ResponseEntity<Product> mappingResponseEntity(Product product) {
-        return new ResponseEntity<>(product, HttpStatus.OK);
-    }
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> search(@RequestParam(value = "searchType") String searchType,
+                                                @RequestParam(value = "name") String name,
+                                                @RequestParam(value = "price") Double price,
+                                                @RequestParam(value = "inStock") Boolean inStock,
+                                                @RequestParam(value = "sortType") String sortType) {
 
-    private ResponseEntity<List<Product>> mappingResponseEntityList(List<Product> products) {
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        List<Product> searchResult;
+        switch (searchType) {
+            case "NAME" -> searchResult = productService.searchByName(name);
+            case "PRICE" -> searchResult = productService.searchByPrice(price);
+            case "PRICELOWER" -> searchResult = productService.searchPriceLower(price);
+            case "PRICEHIGHER" -> searchResult = productService.searchPriceHigher(price);
+            case "INSTOCK" -> searchResult = productService.searchInStock(inStock);
+            default -> searchResult = new LinkedList<>();
+        }
+
+        switch (sortType) {
+            case "NAME" -> {
+                return mappingResponseEntityList(productService.sortByName(searchResult));
+            }
+            case "PRICE" -> {
+                return mappingResponseEntityList(productService.sortByPrice(searchResult));
+            }
+            default -> {
+                return mappingResponseEntityList(searchResult);
+            }
+        }
     }
 
     @PostMapping
@@ -52,5 +75,13 @@ public class ProductController {
     public HttpStatus delete(@PathVariable("id") Long id) {
         productService.delete(id);
         return HttpStatus.OK;
+    }
+
+    private ResponseEntity<Product> mappingResponseEntity(Product product) {
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    private ResponseEntity<List<Product>> mappingResponseEntityList(List<Product> products) {
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }
