@@ -6,17 +6,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.krasnovm.interviewtask.dto.ProductDto;
 import ru.krasnovm.interviewtask.entity.Product;
-import ru.krasnovm.interviewtask.repository.ProductCollection;
+import ru.krasnovm.interviewtask.repository.ProductRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
 
     @Mock
-    private ProductCollection repository;
+    private ProductRepository repository;
 
     @InjectMocks
     private ProductService productService;
@@ -68,33 +70,60 @@ class ProductServiceTest {
 
     @Test
     void shouldCreateProduct() throws Exception {
-        when(repository.create(normalProduct)).thenReturn(normalProduct);
-        Product created = productService.create(normalProduct);
+        ProductDto dto = ProductDto.builder()
+                .name(normalProduct.getName())
+                .description(normalProduct.getDescription())
+                .price(normalProduct.getPrice())
+                .inStock(normalProduct.getInStock())
+                .build();
 
+        when(repository.save(any())).thenReturn(normalProduct);
+        Product created = productService.create(dto);
         assertThat(created).isSameAs(normalProduct);
     }
 
     @Test
     void CreateShouldFailNameIsTooLong() throws Exception {
-        Product created = productService.create(longNameProduct);
+        ProductDto dto = ProductDto.builder()
+                .name(longNameProduct.getName())
+                .description(longNameProduct.getDescription())
+                .price(longNameProduct.getPrice())
+                .inStock(longNameProduct.getInStock())
+                .build();
+
+        Product created = productService.create(dto);
         assertThat(created).isSameAs(null);
     }
 
     @Test
     void CreateShouldFailDescriptionIsTooLong() throws Exception {
-        Product created = productService.create(longDescProduct);
+        ProductDto dto = ProductDto.builder()
+                .name(longDescProduct.getName())
+                .description(longDescProduct.getDescription())
+                .price(longDescProduct.getPrice())
+                .inStock(longDescProduct.getInStock())
+                .build();
+
+        Product created = productService.create(dto);
         assertThat(created).isSameAs(null);
     }
 
     @Test
     void CreateShouldFailPriceIsNegative() throws Exception {
-        Product created = productService.create(negativePriceProduct);
+        ProductDto dto = ProductDto.builder()
+                .name(negativePriceProduct.getName())
+                .description(negativePriceProduct.getDescription())
+                .price(negativePriceProduct.getPrice())
+                .inStock(negativePriceProduct.getInStock())
+                .build();
+
+        Product created = productService.create(dto);
         assertThat(created).isSameAs(null);
     }
 
     @Test
     void shouldUpdateProduct() {
-        when(repository.update(normalProduct)).thenReturn(normalProduct);
+        when(repository.save(normalProduct)).thenReturn(normalProduct);
         Product updated = productService.update(normalProduct);
 
         assertThat(updated).isSameAs(normalProduct);

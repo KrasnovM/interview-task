@@ -69,7 +69,7 @@ public class ProductControllerTest {
 
         String expectedResponse = """
                {
-                   "id":3,
+                   "id":1,
                    "name":"Orange",
                    "description":"Orange desc",
                    "price":114.5,
