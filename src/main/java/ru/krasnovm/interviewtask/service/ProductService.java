@@ -6,7 +6,9 @@ import ru.krasnovm.interviewtask.dto.ProductDto;
 import ru.krasnovm.interviewtask.entity.Product;
 import ru.krasnovm.interviewtask.repository.ProductRepository;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -15,6 +17,52 @@ public class ProductService {
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    public List<Product> searchByName(String name) {
+        if (name == null || name.isEmpty()) {
+            return null;
+        }
+
+        return productRepository.findByNameLike(name + "%");
+    }
+
+    public List<Product> searchByPrice(Double price) {
+        if (price == null || price < 0) {
+            return null;
+        }
+        return productRepository.findByPrice(price);
+    }
+
+    public List<Product> searchPriceHigher(Double price) {
+        if (price == null || price < 0) {
+            return null;
+        }
+        return productRepository.findByPriceGreaterThan(price);
+    }
+
+    public List<Product> searchPriceLower(Double price) {
+        if (price == null || price < 0) {
+            return null;
+        }
+        return productRepository.findByPriceLessThan(price);
+    }
+
+    public List<Product> searchInStock(Boolean inStock) {
+        if (inStock == null) {
+            return null;
+        }
+        return productRepository.findByInStock(inStock);
+    }
+
+    public  List<Product> sortByName(List<Product> products) {
+        return products.stream().sorted(Comparator.comparing(Product::getName)).
+                collect(Collectors.toList());
+    }
+
+    public List<Product> sortByPrice(List<Product> products) {
+        return products.stream().sorted(Comparator.comparing(Product::getPrice)).
+                collect(Collectors.toList());
     }
 
     public Product create(ProductDto productDto) {
